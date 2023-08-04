@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock.action_location_form" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_location_ids','=',1)]</field>
+        </record> 
+    </data>
+</odoo>

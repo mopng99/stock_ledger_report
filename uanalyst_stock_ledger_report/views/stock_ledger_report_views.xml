@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_report_stock_ledger_tree" model="ir.ui.view">
+            <field name="name">stock.ledger.report.tree</field>
+            <field name="model">stock.ledger.report</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Analysis Report" create="0" delete="0" export_xlsx="0">
+                    <field name="scheduled_date"/>
+                    <field name="date"/>
+                    <field name="reference"/>
+                    <field name="state" invisible="1"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="uom_id" invisible="context.get('uom_column_hide')"/>
+                    <field name="uom_po_id" invisible="context.get('po_uom_column_hide')"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="inward_stock" invisible="context.get('uom_column_hide')"/>
+                    <field name="outward_stock" invisible="context.get('uom_column_hide')"/>
+                    <field name="balance_qty" invisible="context.get('uom_column_hide')"/>
+                    <field name="uom_po_inward_stock" invisible="context.get('po_uom_column_hide')"/>
+                    <field name="uom_po_outward_stock" invisible="context.get('po_uom_column_hide')"/>
+                    <field name="uom_po_balance_qty" invisible="context.get('po_uom_column_hide')"/>
+                    <field name="currency_id" invisible="1"/>
+                    <!--                    <field name="total_line_cost" groups="uanalyst_stock.group_hide_product_transfer_cost"/>-->
+                    <field name="in_total_line_cost" groups="uanalyst_stock.group_hide_product_transfer_cost"/>
+                    <field name="out_total_line_cost" groups="uanalyst_stock.group_hide_product_transfer_cost"/>
+                    <field name="picking_type_id" optional="hide"/>
+                    <field name="type" optional="hide"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="product_active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_report_stock_ledger_filter" model="ir.ui.view">
+            <field name="name">stock.ledger.report.filter</field>
+            <field name="model">stock.ledger.report</field>
+            <field name="arch" type="xml">
+                <search string="Stock Analysis">
+                    <filter string="This Year" name="thisyear"
+                            domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter string="This Month" name="this_month"
+                            domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-01'))]"/>
+                    <filter string="Last Month" name="last_month"
+                            domain="['&amp;', ('date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date', '&lt;', context_today().strftime('%%Y-%%m-01'))]"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+                    <field name="location_id" string="From" filter_domain="[('location_id', 'ilike', self)]"/>
+                    <field name="location_dest_id" string="To" filter_domain="[('location_dest_id', 'ilike', self)]"/>
+                    <field name="company_id"/>
+                    <field name="date"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="product" context="{'group_by':'product_id'}"/>
+                        <filter string="Location" context="{'group_by':'location_dest_id'}" name="location"/>
+                        <filter string="Contact" context="{'group_by':'partner_id'}" name="contact"/>
+                        <filter string="Product Category" context="{'group_by':'product_category'}"
+                                name="product_category"/>
+                        <filter string="Date" context="{'group_by':'date'}" name="date"/>
+                        <filter string="Company" context="{'group_by':'company_id'}" name="company"/>
+                    </group>
+                    <filter name="filter_inactive_product" string="Archived Product"
+                            domain="[('product_active', '!=', True)]"/>
+                    <filter string="Active Product" name="product_active" domain="[('product_active','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="report_stock_ledger_action_server" model="ir.actions.server">
+            <field name="name">Print</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="uanalyst_stock_ledger_report.model_stock_ledger_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'report.excel.stock.ledger.wizard',
+                'view_type': 'form',
+                'target': 'new',
+                }
+            </field>
+        </record>
+    </data>
+</odoo>

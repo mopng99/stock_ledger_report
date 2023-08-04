@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- security groups -->
+        <record id="group_purchase_purchaserepresentative" model="res.groups">
+            <field name="name">Purchase User Own Documents Only</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="base.module_category_inventory_purchase"/>
+            <field name="comment">the user will have access to his own data in the purchase application.</field>
+        </record>
+        <record id="stock_location_restrictions_group" model="res.groups">
+            <field name="name">Stock Locations Restrictions</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="hide_product_on_hand_qty_button_hide" model="res.groups">
+            <field name="name">Display Product On Hand Qty. Button</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <!-- Menuitems -->
+        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('group_purchase_purchaserepresentative'))]"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <!-- Record Rules -->
+        <record id="stock_quant_restriction_ir_rule" model="ir.rule">
+            <field name="name">Stock Quant (Inventory Qunatity) Restrictions</field>
+            <field name="model_id" search="[('model','=','stock.quant')]" model="ir.model"/>
+            <field name="groups" eval="[(4, ref('stock_location_restrictions_group'))]"/>
+            <field name="domain_force">[('location_id','in', user.restrict_stock_location_ids.ids)]</field>
+        </record>
+    </data>
+</odoo>

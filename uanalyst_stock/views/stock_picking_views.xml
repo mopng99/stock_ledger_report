@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vpicktree_view_tree_custom_field_added" model="ir.ui.view">
+        <field name="name">stock.picking.custom.inherit.field.added</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="scheduled_date"  position="after">
+                <field name="currency_id" invisible="1"/>
+                <field name="total_transfer_cost" widget="monetary" force_save="1" groups="uanalyst_stock.group_hide_product_transfer_cost"/>
+            </field>
+        </field>
+    </record>
+</odoo>

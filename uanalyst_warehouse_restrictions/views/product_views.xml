@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_normal_form_view_inherit_added_security_groups">
+            <field name="name">product.product.security.access</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_open_quants']" position="attributes">
+                    <attribute name="groups">uanalyst_warehouse_restrictions.hide_product_on_hand_qty_button_hide</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_template_only_form_view_inherit_added_security_groups">
+            <field name="name">product.template.security.access.rights</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_open_quants']" position="attributes">
+                    <attribute name="groups">uanalyst_warehouse_restrictions.hide_product_on_hand_qty_button_hide</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

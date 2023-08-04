@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_users_form_inherit_added_warehouse_restrictions_new_page" model="ir.ui.view">
+            <field name="name">res.users.form.inherit.default.warehouse.restrictions</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='preferences']" position="after">
+                    <page string="Restrictions" name="stock_warehouse_restrictions">
+                     <!-- attrs="{'invisible':[('login','=','admin')]}"> -->
+                        <group string="Warehouse Restrictions" name="warehouse_restrictions">
+                            <field name="restrict_warehouse_operations"/>
+                            <field name="default_stock_warehouse_ids" string=" " widget="many2many_tags"
+                                   attrs="{'required': [('restrict_warehouse_operations', '=', True)]}"/>
+                            <field name="restrict_stock_locations"/>
+                            <field name="restrict_stock_location_ids" string=" " widget="many2many_tags"
+                                attrs="{'required': [('restrict_stock_locations', '=', True)]}"/>
+                            <field name="restrict_stock_operations_type"/>
+                            <field name="restrict_stock_picking_type_ids" string=" " widget="many2many_tags"
+                                attrs="{'required': [('restrict_stock_operations_type', '=', True)]}"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

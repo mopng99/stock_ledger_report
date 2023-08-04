@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_excel_stock_ledger_wizard_form_view" model="ir.ui.view">
+        <field name="name">report.excel.stock.ledger.wizard.form.view</field>
+        <field name="model">report.excel.stock.ledger.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="location_id" required="1" options="{'no_create': True, 'no_open':True}"/>
+                        <field name="uom_options" widget="radio"/>
+                        <field name="group_by_options" widget="selection"/>
+                    </group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="filter_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Generate Excel Report" name="action_print_excel_report" type="object" invisible="0"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_excel_stock_ledger_wizard_form" model="ir.actions.act_window">
+        <field name="name">Stock Ledger Excel Report</field>
+        <field name="res_model">report.excel.stock.ledger.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_action_order_report_excel_stock_ledger_analysis_report"
+              name="Stock Ledger Excel Report"
+              action="action_report_excel_stock_ledger_wizard_form"
+              parent="stock.menu_warehouse_report"/>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="domain">[('search_purchase_order_ids','=',1)]</field>
+        </record>
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="domain">[('search_purchase_order_ids','=',1),('state','in',('purchase', 'done'))]</field>
+        </record>
+        <record id="purchase_requisition.action_purchase_requisition" model="ir.actions.act_window">
+            <field name="domain">[('search_purchase_requisition_ids','=',1)]</field>
+        </record>
+        <record id="stock.action_warehouse_form" model="ir.actions.act_window">
+            <field name="domain">[('search_warehouse_ids','in',1)]</field>
+            <field name="context">{}</field>
+        </record>
+        <record id="stock.action_routes_form" model="ir.actions.act_window">
+            <field name="domain">[('search_location_route_ids','=',1)]</field>
+            <field name="context">{}</field>
+        </record>
+        <record id="stock.action_rules_form" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_rule_ids','=',1)]</field>
+            <field name="context">{}</field>
+        </record>
+        <!-- Operation types list view -->
+        <record id="stock.action_picking_type_list" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_picking_type_ids','in',1)]</field>
+            <field name="context">{}</field>
+        </record>
+        <!-- Operations overview -->
+        <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_picking_type_ids','in',1)]</field>
+            <field name="context">{}</field>
+        </record>
+        <!-- diff types of the transfer list views-->
+        <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_pickings','=',1)]</field>
+        </record>
+        <record id="stock.stock_picking_action_picking_type" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_pickings','=',1)]</field>
+        </record>
+        <record id="stock.action_picking_tree_ready" model="ir.actions.act_window">
+            <field name="domain">[('search_stock_pickings','=',1)]</field>
+        </record>
+    </data>
+</odoo>
